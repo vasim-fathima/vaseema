@@ -1,0 +1,84 @@
+import React, { useState, useMemo } from "react";
+</div>
+
+
+<div className="bg-white p-4 rounded-xl shadow-sm">
+<h4 className="font-semibold mb-2">Fuel / Charging Cost</h4>
+<div className="space-y-2">
+<input type="number" value={fuelInputs.distancePerDay} onChange={(e)=>setFuelInputs({...fuelInputs, distancePerDay: Number(e.target.value)})} className="w-full p-2 border rounded" placeholder="Distance per day (km)" />
+<input type="number" value={fuelInputs.fuelEfficiency} onChange={(e)=>setFuelInputs({...fuelInputs, fuelEfficiency: Number(e.target.value)})} className="w-full p-2 border rounded" placeholder="Efficiency (km per L or km per charge)" />
+<input type="number" value={fuelInputs.fuelPrice} onChange={(e)=>setFuelInputs({...fuelInputs, fuelPrice: Number(e.target.value)})} className="w-full p-2 border rounded" placeholder="Fuel / energy price (₹ per unit)" />
+<div className="mt-2">
+<div className="text-sm text-gray-600">Estimated Monthly Cost</div>
+<div className="text-xl font-bold">₹{Math.round(calcMonthlyFuel(fuelInputs)).toLocaleString('en-IN')}</div>
+</div>
+</div>
+</div>
+
+
+<div className="bg-white p-4 rounded-xl shadow-sm">
+<h4 className="font-semibold mb-2">Showrooms</h4>
+<ul className="space-y-2 text-sm">
+{showrooms.map(s => (
+<li key={s.id} className="border p-2 rounded">
+<div className="font-medium">{s.name}</div>
+<div className="text-xs text-gray-600">{s.address}</div>
+<div className="mt-1"><a href={`tel:${s.contact}`} className="text-indigo-600">Call</a></div>
+</li>
+))}
+</ul>
+</div>
+
+
+<div className="bg-white p-4 rounded-xl shadow-sm">
+<h4 className="font-semibold mb-2">Quick Actions</h4>
+<div className="flex flex-col gap-2">
+<button onClick={()=>window.scrollTo({top:0, behavior:'smooth'})} className="p-2 rounded bg-indigo-600 text-white">Post a Listing (Sell)</button>
+<button onClick={()=>document.getElementById('testRideScroll')?.scrollIntoView({behavior:'smooth'})} className="p-2 rounded border">Book Test Ride</button>
+</div>
+</div>
+</aside>
+
+
+{/* Bottom - Forms */}
+<section className="lg:col-span-4">
+<div id="testRideScroll" className="bg-white p-4 rounded-xl shadow-sm mt-6">
+<h3 className="font-semibold mb-2">Book a Test Ride</h3>
+<form onSubmit={submitTestRide} className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<input className="p-2 border rounded" placeholder="Your name" value={testRideForm.name} onChange={(e)=>setTestRideForm({...testRideForm, name: e.target.value})} required />
+<input className="p-2 border rounded" placeholder="Phone" value={testRideForm.phone} onChange={(e)=>setTestRideForm({...testRideForm, phone: e.target.value})} required />
+<select className="p-2 border rounded" value={testRideForm.bikeId} onChange={(e)=>setTestRideForm({...testRideForm, bikeId: e.target.value})}>
+<option value="">Select bike</option>
+{inventory.map(b => <option key={b.id} value={b.id}>{b.brand} {b.model} - ₹{b.price.toLocaleString('en-IN')}</option>)}
+</select>
+<div className="sm:col-span-3">
+<button type="submit" className="px-4 py-2 bg-green-600 text-white rounded">Request Test Ride</button>
+</div>
+</form>
+</div>
+
+
+<div className="bg-white p-4 rounded-xl shadow-sm mt-6">
+<h3 className="font-semibold mb-2">Sell Your Bike</h3>
+<form onSubmit={submitSell} className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<input className="p-2 border rounded" placeholder="Your name" value={sellForm.name} onChange={(e)=>setSellForm({...sellForm, name: e.target.value})} required />
+<input className="p-2 border rounded" placeholder="Phone" value={sellForm.phone} onChange={(e)=>setSellForm({...sellForm, phone: e.target.value})} required />
+<input className="p-2 border rounded" placeholder="Make (eg Hero)" value={sellForm.make} onChange={(e)=>setSellForm({...sellForm, make: e.target.value})} required />
+<input className="p-2 border rounded" placeholder="Model" value={sellForm.model} onChange={(e)=>setSellForm({...sellForm, model: e.target.value})} required />
+<input className="p-2 border rounded" placeholder="Year" value={sellForm.year} onChange={(e)=>setSellForm({...sellForm, year: e.target.value})} required />
+<input className="p-2 border rounded" placeholder="Expected price" value={sellForm.price} onChange={(e)=>setSellForm({...sellForm, price: e.target.value})} required />
+<div className="sm:col-span-3">
+<button type="submit" className="px-4 py-2 bg-yellow-600 text-white rounded">Post Listing</button>
+</div>
+</form>
+</div>
+
+
+</section>
+</main>
+
+
+<footer className="max-w-6xl mx-auto mt-8 text-center text-sm text-gray-500">© Vahan Bazar — Inventory demo</footer>
+</div>
+);
+}
